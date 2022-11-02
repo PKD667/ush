@@ -10,30 +10,27 @@ int run(ins* in) {
 
     // check if the command is a builtin
     // ...
+    if (builtin(in)) {
+        return 0;
+    }
 
     char* path = NULL;
 
     // check if the command is file that exists and is executable
-    if (access(in->name,X_OK) == 0)
+    if (access(name(in),X_OK) == 0)
     {
-        path = in->name;
+        path = name(in);
     }
     else {
         // if not, check if the command is in PATH
-        path = getpath(in->name);
+        path = getpath(name(in));
         if (path == NULL) {
-            printf("Command not found : %s\n", in->name);
+            printf("Command not found : %s\n", name(in));
             return 1;
         }
     }
 
-    //convert args
-    int e_argc = in->argc + 2;
-    char** e_argv = calloc(e_argc,sizeof(char*));
-    e_argv[0] = in->name;
-    for (int i = 1; i < e_argc; i++) {
-        e_argv[i] = in->args[i-1];
-    }
+
 
     
 
@@ -41,8 +38,8 @@ int run(ins* in) {
     int pid = fork();
     if (pid == 0) {
         // child
-        execv(path, e_argv);
-        printf("Error running '%s'\n", in->name);
+        execv(path, in->argv);
+        printf("Error running '%s'\n", name(in));
         exit(1);
     } else {
         // parent
