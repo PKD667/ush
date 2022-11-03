@@ -1,0 +1,4 @@
+ls
+echo "testing is working...."
+ls /
+sleep 1

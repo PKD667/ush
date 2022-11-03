@@ -1,3 +1,4 @@
+#include <stdio.h>
 #define MAX_PATH 1024
 #define MAX_ARGS 64
 
@@ -14,10 +15,11 @@ typedef struct ins {
 
 int init();
 
-int parse(char* line, ins* instruction);
+int parseline(char** line, ins* instruction);
 int run(ins* in);
 int builtin(ins* in);
 
 char* getpath(const char* name);
 int cutline(char* line,char** args);
-int procargs(int argc, char** argv);
+int procline(char** line);
+ssize_t readline(char** line,FILE* stream);

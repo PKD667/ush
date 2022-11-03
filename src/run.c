@@ -30,14 +30,17 @@ int run(ins* in) {
         }
     }
 
-
-
-    
-
     // if it is, run it
     int pid = fork();
     if (pid == 0) {
         // child
+        // printf the finl command with args
+        //printf("Running: '%s'", path);
+        //for (int i = 1; i < in->argc; i++) {
+        //    printf(" '%s'", in->argv[i]);
+        //}
+        //printf("\n");
+
         execv(path, in->argv);
         printf("Error running '%s'\n", name(in));
         exit(1);
